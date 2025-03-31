@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 01</title>
+
+    <script>
+        
+        while (true){
+            var nota = parseInt(prompt("Digite sua nota: "));
+
+            if (typeof nota === "number"){
+
+                if (nota >= 0 && nota <= 10){
+
+                    if (nota < 5){
+                        alert("Reprovado! ;<");
+                        break
+
+                    }if (nota < 7){
+                        alert("Recuperação! :|");
+                        break
+
+                    }else{
+                        alert("Aprovado! :)")
+                        break
+                    }
+
+                }else{
+                    alert("Nota inválida!!")
+                }
+
+            }else{
+                alert("Nota inválida!!")
+            }
+        }
+        
+
+        
+
+
+    </script>
+</head>
+<body>
+    <h1>Aula 05 - Exercício 01</h1>
+    
+</body>
+</html>
