@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Exercícios - </title>
+  <style>
+    body.dark {
+      background-color: #121212;
+      color: white;
+    }
+    #paragrafoTransicao {
+      transition: max-height 0.5s ease, opacity 0.5s ease;
+      overflow: hidden;
+      max-height: 100px;
+      opacity: 1;
+    }
+    #paragrafoTransicao.oculto {
+      max-height: 0;
+      opacity: 0;
+    }
+    .erro {
+      border: 2px solid red;
+    }
+    .quadrado {
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      margin: 5px;
+    }
+    .lista-item {
+      margin: 5px 0;
+    }
+    section {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+    <h1>João Gabriel Tavares de Lira</h1>
+  <section>
+    
+    <h2>1. Hora Atual</h2>
+    <button onclick="mostrarHora()">Mostrar Hora</button>
+    <p id="horaAtual"></p>
+  </section>
+
+  <section>
+    <h2>2. Alternar Modo Claro/Escuro</h2>
+    <button onclick="alternarModo()" id="modoBtn">☀️</button>
+  </section>
+
+  <section>
+    <h2>3. Curtir</h2>
+    <button onclick="curtir()">❤️ Curtir</button> <span id="contadorCurtidas">0</span>
+  </section>
+
+  <section>
+    <h2>4. Campo Obrigatório</h2>
+    <input type="text" id="campoObrigatorio" onblur="verificarCampo()" placeholder="Campo obrigatório">
+  </section>
+
+  <section>
+    <h2>5. Parágrafo com Transição</h2>
+    <button onclick="alternarParagrafo()">Mostrar/Ocultar</button>
+    <p id="paragrafoTransicao">Este parágrafo aparece ou desaparece com transição suave.</p>
+  </section>
+
+  <section>
+    <h2>6. Copiar para Clipboard</h2>
+    <div id="textoCopiar">Texto para copiar.</div>
+    <button onclick="copiarTexto()">Copiar Texto</button>
+  </section>
+
+  <section>
+    <h2>7. Validação de Comprimento</h2>
+    <input type="text" id="campoValidar" oninput="validarTexto()" placeholder="Min. 5 caracteres">
+  </section>
+
+  <section>
+    <h2>8. Quadrados Aleatórios</h2>
+    <button onclick="gerarQuadrados()">Gerar Quadrados</button>
+    <div id="containerQuadrados"></div>
+  </section>
+
+  <section>
+    <h2>9. Upload e Pré-visualização</h2>
+    <input type="file" id="uploadImagem" accept="image/*" onchange="mostrarPreview()">
+    <br>
+    <img id="previewImagem" width="200" style="display:none; margin-top:10px;">
+  </section>
+
+  <section>
+    <h2>10. Lista com Mover</h2>
+    <ul id="lista">
+      <li class="lista-item">Item 1 <button onclick="mover(this, -1)">↑</button> <button onclick="mover(this, 1)">↓</button></li>
+      <li class="lista-item">Item 2 <button onclick="mover(this, -1)">↑</button> <button onclick="mover(this, 1)">↓</button></li>
+      <li class="lista-item">Item 3 <button onclick="mover(this, -1)">↑</button> <button onclick="mover(this, 1)">↓</button></li>
+    </ul>
+  </section>
+
+  <script>
+    function mostrarHora() {
+      const agora = new Date();
+      const hora = agora.toLocaleTimeString();
+      document.getElementById("horaAtual").textContent = hora;
+    }
+
+    function alternarModo() {
+      document.body.classList.toggle("dark");
+      const btn = document.getElementById("modoBtn");
+      btn.textContent = document.body.classList.contains("dark") ? "🌙" : "☀️";
+    }
+
+    let curtidas = 0;
+    function curtir() {
+      curtidas++;
+      document.getElementById("contadorCurtidas").textContent = curtidas;
+    }
+
+    function verificarCampo() {
+      const campo = document.getElementById("campoObrigatorio");
+      if (campo.value.trim() === "") {
+        alert("Este campo é obrigatório!");
+      }
+    }
+
+    function alternarParagrafo() {
+      const p = document.getElementById("paragrafoTransicao");
+      p.classList.toggle("oculto");
+    }
+
+    function copiarTexto() {
+      const texto = document.getElementById("textoCopiar").textContent;
+      navigator.clipboard.writeText(texto).then(() => {
+        alert("Texto copiado!");
+      });
+    }
+
+    function validarTexto() {
+      const campo = document.getElementById("campoValidar");
+      campo.classList.toggle("erro", campo.value.length < 5);
+    }
+
+    function gerarQuadrados() {
+      const container = document.getElementById("containerQuadrados");
+      container.innerHTML = "";
+      for (let i = 0; i < 5; i++) {
+        const div = document.createElement("div");
+        div.className = "quadrado";
+        div.style.backgroundColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+        container.appendChild(div);
+      }
+    }
+
+    function mostrarPreview() {
+      const input = document.getElementById("uploadImagem");
+      const img = document.getElementById("previewImagem");
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => {
+          img.src = e.target.result;
+          img.style.display = "block";
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function mover(btn, direcao) {
+      const li = btn.parentElement;
+      const ul = li.parentElement;
+      const itens = Array.from(ul.children);
+      const index = itens.indexOf(li);
+      const novoIndex = index + direcao;
+      if (novoIndex >= 0 && novoIndex < itens.length) {
+        ul.insertBefore(li, itens[direcao > 0 ? novoIndex + 1 : novoIndex]);
+      }
+    }
+  </script>
+
+</body>
+</html>
