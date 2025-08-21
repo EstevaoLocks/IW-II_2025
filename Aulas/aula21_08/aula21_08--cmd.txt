@@ -1,0 +1,15 @@
+---------------------------------
+comandos React Expo -- Aula 21/08
+---------------------------------
+
+npm install -g expo-cli
+
+npx create-expo-app stickersmash
+
+CD stickersmash
+
+npm run reset-project
+
+-----------------------------------------------------------------------
+link tutorial: https://docs.expo.dev/tutorial/create-your-first-app/
+-----------------------------------------------------------------------
